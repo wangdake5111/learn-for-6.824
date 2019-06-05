@@ -1,0 +1,8 @@
+master: Starting Map/Reduce task iiseq
+Reduce: job name = iiseq, output file = mrtmp.iiseq-res-0, reduce task id = 0, nMap = 8
+Reduce: job name = iiseq, output file = mrtmp.iiseq-res-1, reduce task id = 1, nMap = 8
+Reduce: job name = iiseq, output file = mrtmp.iiseq-res-2, reduce task id = 2, nMap = 8
+Merge: read mrtmp.iiseq-res-0
+Merge: read mrtmp.iiseq-res-1
+Merge: read mrtmp.iiseq-res-2
+master: Map/Reduce task completed

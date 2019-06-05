@@ -1,0 +1,33 @@
+Test (2A): initial election ...
+In Term 1: Server 1 transfer from FOLLOWER to CANDIDATE
+server 1 become CANDIDATE, Term = 2
+server 1 got 2 out of 3 vote, become LEADER, Term = 2
+In Term 2: Server 1 transfer from CANDIDATE to LEADER
+In Term 1: Server 2 transfer from FOLLOWER to CANDIDATE
+server 2 become CANDIDATE, Term = 2
+server 2 got 2 out of 3 vote, become LEADER, Term = 2
+In Term 2: Server 2 transfer from CANDIDATE to LEADER
+In Term 1: Server 0 transfer from FOLLOWER to CANDIDATE
+server 0 become CANDIDATE, Term = 2
+server 0 got 2 out of 3 vote, become LEADER, Term = 2
+In Term 2: Server 0 transfer from CANDIDATE to LEADER
+--- FAIL: TestInitialElection2A (5.09s)
+    config.go:329: expected one leader, got none, 第9次
+Test (2A): election after network failure ...
+In Term 1: Server 1 transfer from FOLLOWER to CANDIDATE
+server 1 become CANDIDATE, Term = 2
+server 1 got 2 out of 3 vote, become LEADER, Term = 2
+In Term 2: Server 1 transfer from CANDIDATE to LEADER
+In Term 1: Server 2 transfer from FOLLOWER to CANDIDATE
+server 2 become CANDIDATE, Term = 2
+server 2 got 2 out of 3 vote, become LEADER, Term = 2
+In Term 2: Server 2 transfer from CANDIDATE to LEADER
+In Term 1: Server 0 transfer from FOLLOWER to CANDIDATE
+server 0 become CANDIDATE, Term = 2
+server 0 got 2 out of 3 vote, become LEADER, Term = 2
+In Term 2: Server 0 transfer from CANDIDATE to LEADER
+--- FAIL: TestReElection2A (5.14s)
+    config.go:329: expected one leader, got none, 第9次
+FAIL
+exit status 1
+FAIL	raft	10.243s
