@@ -173,11 +173,13 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 		reply.Success = false
 	}else {
 		if args.Term>rf.currentTerm{
+			//find a larger term ,turn to be a follower,voteFor = -1
 			rf.currentTerm = args.Term
 			rf.state = FOLLOWER
 			rf.votedFor = -1
 		}
 		if rf.votedFor == -1{
+			// have vote,reset the timer
 			rf.resetTimer <- struct{}{}
 			rf.state = FOLLOWER
 			rf.votedFor = args.CandidateId
@@ -199,20 +201,25 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 
 	rf.mu.Lock()
 	defer rf.mu.Unlock()
+	// appendEntries rule 1
 	if args.Term < rf.currentTerm{
 		reply.Term = rf.currentTerm
 		reply.Success = false
 		return
 	}
+	//all server rule 1
 	if rf.currentTerm < args.Term{
 		rf.currentTerm = args.Term
 	}
+	// just one leader
 	if rf.state == LEADER{
 		rf.turnToFollow()
 	}
+	// vote for the true leader
 	if rf.votedFor != args.LeaderId{
 		rf.votedFor = args.LeaderId
 	}
+	//get append,reset the timer
 	rf.resetTimer <- struct{}{}
 }
 //
@@ -276,6 +283,7 @@ func (rf *Raft) turnToFollow(){
 	rf.state=FOLLOWER
 	rf.votedFor = -1
 }
+// check the servers' consistency
 func (rf *Raft) consistencyCheckReplyHandler(n int, reply *AppendEntriesReply){
 	rf.mu.Lock()
 	defer rf.mu.Unlock()
@@ -286,7 +294,9 @@ func (rf *Raft) consistencyCheckReplyHandler(n int, reply *AppendEntriesReply){
 	if reply.Success{
 
 	}else{
+		//为什么还要检验rf.state
 		if(rf.state==LEADER && reply.Term>rf.currentTerm){
+			//find a larger term, turn to be a follower
 			rf.turnToFollow()
 			rf.resetTimer <- struct{}{}
 			DPrintf("[%d-]: leader %d found new term (heartbeat resp from peer %d), turn to follower.",
@@ -295,11 +305,14 @@ func (rf *Raft) consistencyCheckReplyHandler(n int, reply *AppendEntriesReply){
 		}
 	}
 }
+// heartbeat for ensure leader's state
 func (rf *Raft)heartbeatDaemon() {
 	for {
+		// not a leader, out!
 		if _, isLeader := rf.GetState(); !isLeader {
 			return
 		}
+		//send a heartbeat, reset the timer
 	rf.resetTimer <- struct{}{}
 	var args AppendEntriesArgs
 	rf.fillAppendEntriesArgs(&args)
@@ -311,6 +324,7 @@ func (rf *Raft)heartbeatDaemon() {
 				go func(n int) {
 					var reply AppendEntriesReply
 					if rf.sendAppendEntries(n, &args, &reply){
+						// if rpc has been sent, check the consistency
 						rf.consistencyCheckReplyHandler(n, &reply)
 					}
 				}(i)
@@ -325,9 +339,11 @@ func (rf *Raft) broadcastRequestVotes(){
 	rf.fillRequestVoteArgs(&args)
 	peers := len(rf.peers)
 	vote := 1
+	// a handler to ensure whether a candidate can be a leader
 	replyHandler := func(reply *RequestVoteReply){
 		rf.mu.Lock()
 		defer rf.mu.Unlock()
+		// the "if" is to prevent the situation that another candidate be a leader when the go routines still run
 		if rf.state==CANDIDATE{
 			if reply.Term > args.Term{
 				rf.currentTerm = reply.Term
@@ -336,9 +352,10 @@ func (rf *Raft) broadcastRequestVotes(){
 				return
 			}
 			if reply.Success {
+				//why == peers/2 is because vote++ is at the end
 				if vote == peers/2{
-					DPrintf("有%d票",vote)
 					rf.state = LEADER
+					//when it is a leader, it should send the heartbeat periodically
 					go rf.heartbeatDaemon()
 					DPrintf("[%d-]: peer %d become new leader.\n", rf.me,rf.me)
 					return
@@ -358,24 +375,7 @@ func (rf *Raft) broadcastRequestVotes(){
 		}
 	}
 }
-//func (rf *Raft) broadcastAppendEntries(){
-//	var args AppendEntriesArgs
-//	rf.fillAppendEntriesArgs(&args)
-//	for i:=0;i<len(rf.peers);i++{
-//		var reply AppendEntriesReply
-//		if(rf.me==i){
-//			continue
-//		}
-//		if(rf.sendAppendEntries(i, &args, &reply)){
-//			if(reply.Success==false){
-//				if(reply.Term>)
-//			}
-//		}
-//
-//
-//	}
-//}
-//
+
 // the service using Raft (e.g. a k/v server) wants to start
 // agreement on the next command to be appended to Raft's log. if this
 // server isn't the leader, returns false. otherwise start the
@@ -402,14 +402,17 @@ func (rf *Raft) Start(command interface{}) (int, int, bool) {
 func (rf*Raft) electionDaemon(){
 	for {
 		select {
+		// the signal to resetTimer
 		case <-rf.resetTimer:
 			if !rf.electionTimer.Stop() {
 				<-rf.electionTimer.C
 			}
 			rf.electionTimer.Reset(rf.electionTimeOut)
+			//timeout, start to elect the leader
 		case <-rf.electionTimer.C:
 			DPrintf("[%d]: peer %d election timeout, issue election @ term %d\n",
 				rf.me, rf.me, rf.currentTerm)
+			// request for the vote and reset the timer
 			go rf.broadcastRequestVotes()
 			rf.electionTimer.Reset(rf.electionTimeOut)
 		}
@@ -456,6 +459,7 @@ func Make(peers []*labrpc.ClientEnd, me int,
 	rf.electionTimer = time.NewTimer(rf.electionTimeOut)
 	// initialize from state persisted before a crash
 	rf.readPersist(persister.ReadRaftState())
+	//start the election
 	go rf.electionDaemon()
 	DPrintf("[%d-]: newborn election(%s) heartbeat(%s) term(%d) voted(%d)\n",
 		rf.me, rf.electionTimeOut, HEARTBEATINTERVAL, rf.currentTerm, rf.votedFor)
