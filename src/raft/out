@@ -1,33 +1,1342 @@
 Test (2A): initial election ...
-In Term 1: Server 1 transfer from FOLLOWER to CANDIDATE
-server 1 become CANDIDATE, Term = 2
-server 1 got 2 out of 3 vote, become LEADER, Term = 2
-In Term 2: Server 1 transfer from CANDIDATE to LEADER
-In Term 1: Server 2 transfer from FOLLOWER to CANDIDATE
-server 2 become CANDIDATE, Term = 2
-server 2 got 2 out of 3 vote, become LEADER, Term = 2
-In Term 2: Server 2 transfer from CANDIDATE to LEADER
-In Term 1: Server 0 transfer from FOLLOWER to CANDIDATE
-server 0 become CANDIDATE, Term = 2
-server 0 got 2 out of 3 vote, become LEADER, Term = 2
-In Term 2: Server 0 transfer from CANDIDATE to LEADER
---- FAIL: TestInitialElection2A (5.09s)
-    config.go:329: expected one leader, got none, 第9次
+  ... Passed --   3.6  3  148    0
 Test (2A): election after network failure ...
-In Term 1: Server 1 transfer from FOLLOWER to CANDIDATE
-server 1 become CANDIDATE, Term = 2
-server 1 got 2 out of 3 vote, become LEADER, Term = 2
-In Term 2: Server 1 transfer from CANDIDATE to LEADER
-In Term 1: Server 2 transfer from FOLLOWER to CANDIDATE
-server 2 become CANDIDATE, Term = 2
-server 2 got 2 out of 3 vote, become LEADER, Term = 2
-In Term 2: Server 2 transfer from CANDIDATE to LEADER
-In Term 1: Server 0 transfer from FOLLOWER to CANDIDATE
-server 0 become CANDIDATE, Term = 2
-server 0 got 2 out of 3 vote, become LEADER, Term = 2
-In Term 2: Server 0 transfer from CANDIDATE to LEADER
---- FAIL: TestReElection2A (5.14s)
-    config.go:329: expected one leader, got none, 第9次
-FAIL
-exit status 1
-FAIL	raft	10.243s
+==================
+WARNING: DATA RACE
+Write at 0x00c000403a80 by goroutine 84:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:267 +0x9a
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c000403a80 by goroutine 36:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x3a7
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestReElection2A()
+      /Users/wangdake/my6.824/src/raft/test_test.go:52 +0x4a
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 84 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 36 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+==================
+WARNING: DATA RACE
+Write at 0x00c000403af0 by goroutine 72:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:267 +0x9a
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c000403af0 by goroutine 36:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x3a7
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestReElection2A()
+      /Users/wangdake/my6.824/src/raft/test_test.go:52 +0x4a
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 72 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 36 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+==================
+WARNING: DATA RACE
+Write at 0x00c000403a78 by goroutine 84:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:268 +0xd6
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c000403a78 by goroutine 36:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x387
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestReElection2A()
+      /Users/wangdake/my6.824/src/raft/test_test.go:52 +0x4a
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 84 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 36 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+==================
+WARNING: DATA RACE
+Write at 0x00c000403ae8 by goroutine 72:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:268 +0xd6
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c000403ae8 by goroutine 36:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x387
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestReElection2A()
+      /Users/wangdake/my6.824/src/raft/test_test.go:52 +0x4a
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 72 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 36 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+==================
+WARNING: DATA RACE
+Read at 0x00c000122118 by goroutine 15:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:414 +0x1b1
+
+Previous write at 0x00c000122118 by goroutine 86:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:268 +0xd6
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Goroutine 15 (running) created at:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:463 +0x339
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestInitialElection2A()
+      /Users/wangdake/my6.824/src/raft/test_test.go:24 +0x4a
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+==================
+--- FAIL: TestReElection2A (4.62s)
+    testing.go:809: race detected during execution of test
+Test (2B): basic agreement ...
+==================
+WARNING: DATA RACE
+Write at 0x00c0001d8120 by goroutine 213:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:267 +0x9a
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c0001d8120 by goroutine 63:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x3a7
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestBasicAgree2B()
+      /Users/wangdake/my6.824/src/raft/test_test.go:88 +0x4a
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 213 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 63 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+==================
+WARNING: DATA RACE
+Write at 0x00c0001d8118 by goroutine 213:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:268 +0xd6
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c0001d8118 by goroutine 63:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x387
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestBasicAgree2B()
+      /Users/wangdake/my6.824/src/raft/test_test.go:88 +0x4a
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 213 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 63 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+--- FAIL: TestBasicAgree2B (10.05s)
+    config.go:469: one(100) failed to reach agreement
+    testing.go:809: race detected during execution of test
+Test (2B): agreement despite follower disconnection ...
+==================
+WARNING: DATA RACE
+Write at 0x00c00014e580 by goroutine 34:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:267 +0x9a
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c00014e580 by goroutine 98:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x3a7
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestFailAgree2B()
+      /Users/wangdake/my6.824/src/raft/test_test.go:111 +0x4a
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 34 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 98 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+==================
+WARNING: DATA RACE
+Write at 0x00c00014e578 by goroutine 34:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:268 +0xd6
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c00014e578 by goroutine 98:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x387
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestFailAgree2B()
+      /Users/wangdake/my6.824/src/raft/test_test.go:111 +0x4a
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 34 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 98 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+--- FAIL: TestFailAgree2B (10.02s)
+    config.go:469: one(101) failed to reach agreement
+    testing.go:809: race detected during execution of test
+Test (2B): no agreement if too many followers disconnect ...
+==================
+WARNING: DATA RACE
+Write at 0x00c000405150 by goroutine 211:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:267 +0x9a
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c000405150 by goroutine 185:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x3a7
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestFailNoAgree2B()
+      /Users/wangdake/my6.824/src/raft/test_test.go:142 +0x53
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 211 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 185 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+==================
+WARNING: DATA RACE
+Write at 0x00c000405148 by goroutine 211:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:268 +0xd6
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c000405148 by goroutine 185:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x387
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestFailNoAgree2B()
+      /Users/wangdake/my6.824/src/raft/test_test.go:142 +0x53
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 211 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 185 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+--- FAIL: TestFailNoAgree2B (10.03s)
+    config.go:469: one(10) failed to reach agreement
+    testing.go:809: race detected during execution of test
+Test (2B): concurrent Start()s ...
+==================
+WARNING: DATA RACE
+Write at 0x00c0003926d0 by goroutine 94:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:267 +0x9a
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c0003926d0 by goroutine 193:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x3a7
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestConcurrentStarts2B()
+      /Users/wangdake/my6.824/src/raft/test_test.go:193 +0x61
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 94 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 193 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+==================
+WARNING: DATA RACE
+Write at 0x00c0003926c8 by goroutine 94:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:268 +0xd6
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c0003926c8 by goroutine 193:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x387
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestConcurrentStarts2B()
+      /Users/wangdake/my6.824/src/raft/test_test.go:193 +0x61
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 94 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 193 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+--- FAIL: TestConcurrentStarts2B (14.59s)
+    test_test.go:286: term changed too often
+    testing.go:809: race detected during execution of test
+Test (2B): rejoin of partitioned leader ...
+==================
+WARNING: DATA RACE
+Write at 0x00c0004084a0 by goroutine 243:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:267 +0x9a
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c0004084a0 by goroutine 76:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x3a7
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestRejoin2B()
+      /Users/wangdake/my6.824/src/raft/test_test.go:294 +0x4a
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 243 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 76 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+==================
+WARNING: DATA RACE
+Write at 0x00c000408498 by goroutine 243:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:268 +0xd6
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c000408498 by goroutine 76:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x387
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestRejoin2B()
+      /Users/wangdake/my6.824/src/raft/test_test.go:294 +0x4a
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 243 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 76 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+--- FAIL: TestRejoin2B (10.01s)
+    config.go:469: one(101) failed to reach agreement
+    testing.go:809: race detected during execution of test
+Test (2B): leader backs up quickly over incorrect follower logs ...
+==================
+WARNING: DATA RACE
+Write at 0x00c0001b0dd0 by goroutine 240:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:267 +0x9a
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c0001b0dd0 by goroutine 110:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x3a7
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestBackup2B()
+      /Users/wangdake/my6.824/src/raft/test_test.go:332 +0x5e
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 240 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 110 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+==================
+WARNING: DATA RACE
+Write at 0x00c0001b0dc8 by goroutine 240:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:268 +0xd6
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c0001b0dc8 by goroutine 110:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x387
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestBackup2B()
+      /Users/wangdake/my6.824/src/raft/test_test.go:332 +0x5e
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 240 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 110 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+--- FAIL: TestBackup2B (10.01s)
+    config.go:469: one(7729296202396942926) failed to reach agreement
+    testing.go:809: race detected during execution of test
+Test (2B): RPC counts aren't too high ...
+==================
+WARNING: DATA RACE
+Write at 0x00c0004e7700 by goroutine 106:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:267 +0x9a
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c0004e7700 by goroutine 127:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x3a7
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestCount2B()
+      /Users/wangdake/my6.824/src/raft/test_test.go:404 +0x61
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 106 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 127 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+==================
+WARNING: DATA RACE
+Write at 0x00c0004e76f8 by goroutine 106:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:268 +0xd6
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c0004e76f8 by goroutine 127:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x387
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestCount2B()
+      /Users/wangdake/my6.824/src/raft/test_test.go:404 +0x61
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 106 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 127 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+--- FAIL: TestCount2B (1.03s)
+    test_test.go:456: Start() failed
+    testing.go:809: race detected during execution of test
+Test (2C): basic persistence ...
+==================
+WARNING: DATA RACE
+Write at 0x00c0001d8b30 by goroutine 126:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:267 +0x9a
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c0001d8b30 by goroutine 131:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x3a7
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestPersist12C()
+      /Users/wangdake/my6.824/src/raft/test_test.go:514 +0x4a
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 126 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 131 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+==================
+WARNING: DATA RACE
+Write at 0x00c0001d8b28 by goroutine 126:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:268 +0xd6
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c0001d8b28 by goroutine 131:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x387
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestPersist12C()
+      /Users/wangdake/my6.824/src/raft/test_test.go:514 +0x4a
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 126 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 131 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+--- FAIL: TestPersist12C (10.05s)
+    config.go:469: one(11) failed to reach agreement
+    testing.go:809: race detected during execution of test
+Test (2C): more persistence ...
+==================
+WARNING: DATA RACE
+Write at 0x00c000409d90 by goroutine 183:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:267 +0x9a
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c000409d90 by goroutine 196:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x3a7
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestPersist22C()
+      /Users/wangdake/my6.824/src/raft/test_test.go:560 +0x4d
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 183 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 196 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+==================
+WARNING: DATA RACE
+Write at 0x00c000409d88 by goroutine 183:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:268 +0xd6
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c000409d88 by goroutine 196:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x387
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestPersist22C()
+      /Users/wangdake/my6.824/src/raft/test_test.go:560 +0x4d
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 183 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 196 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+--- FAIL: TestPersist22C (10.05s)
+    config.go:469: one(11) failed to reach agreement
+    testing.go:809: race detected during execution of test
+Test (2C): partitioned leader and one follower crash, leader restarts ...
+==================
+WARNING: DATA RACE
+Write at 0x00c000369c40 by goroutine 134:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:267 +0x9a
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c000369c40 by goroutine 8:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x3a7
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestPersist32C()
+      /Users/wangdake/my6.824/src/raft/test_test.go:606 +0x4a
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 134 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 8 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+==================
+WARNING: DATA RACE
+Write at 0x00c000369c38 by goroutine 134:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:268 +0xd6
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c000369c38 by goroutine 8:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x387
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestPersist32C()
+      /Users/wangdake/my6.824/src/raft/test_test.go:606 +0x4a
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 134 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 8 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+--- FAIL: TestPersist32C (10.04s)
+    config.go:469: one(101) failed to reach agreement
+    testing.go:809: race detected during execution of test
+Test (2C): Figure 8 ...
+==================
+WARNING: DATA RACE
+Write at 0x00c000402c80 by goroutine 69:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:267 +0x9a
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c000402c80 by goroutine 154:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x3a7
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestFigure82C()
+      /Users/wangdake/my6.824/src/raft/test_test.go:646 +0x5e
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 69 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 154 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+==================
+WARNING: DATA RACE
+Write at 0x00c000402c78 by goroutine 69:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:268 +0xd6
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c000402c78 by goroutine 154:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x387
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestFigure82C()
+      /Users/wangdake/my6.824/src/raft/test_test.go:646 +0x5e
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 69 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 154 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+--- FAIL: TestFigure82C (10.03s)
+    config.go:469: one(8061648316614689997) failed to reach agreement
+    testing.go:809: race detected during execution of test
+Test (2C): unreliable agreement ...
+==================
+WARNING: DATA RACE
+Write at 0x00c000650740 by goroutine 136:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:267 +0x9a
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c000650740 by goroutine 135:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x3a7
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestUnreliableAgree2C()
+      /Users/wangdake/my6.824/src/raft/test_test.go:702 +0x4a
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 136 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 135 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+==================
+WARNING: DATA RACE
+Write at 0x00c000650738 by goroutine 136:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:268 +0xd6
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c000650738 by goroutine 135:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x387
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestUnreliableAgree2C()
+      /Users/wangdake/my6.824/src/raft/test_test.go:702 +0x4a
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 136 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 135 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+==================
+WARNING: DATA RACE
+Write at 0x00c0000f7651 by goroutine 208:
+  testing.(*common).FailNow()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:608 +0x4c
+  testing.(*common).Fatalf()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:672 +0x9e
+  raft.(*config).one()
+      /Users/wangdake/my6.824/src/raft/config.go:469 +0x319
+  raft.TestUnreliableAgree2C.func1()
+      /Users/wangdake/my6.824/src/raft/test_test.go:714 +0x86
+
+Previous write at 0x00c0000f7651 by goroutine 94:
+  testing.(*common).FailNow()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:608 +0x4c
+  testing.(*common).Fatalf()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:672 +0x9e
+  raft.(*config).one()
+      /Users/wangdake/my6.824/src/raft/config.go:469 +0x319
+  raft.TestUnreliableAgree2C.func1()
+      /Users/wangdake/my6.824/src/raft/test_test.go:714 +0x86
+
+Goroutine 208 (running) created at:
+  raft.TestUnreliableAgree2C()
+      /Users/wangdake/my6.824/src/raft/test_test.go:712 +0x13d
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 94 (finished) created at:
+  raft.TestUnreliableAgree2C()
+      /Users/wangdake/my6.824/src/raft/test_test.go:712 +0x13d
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+==================
+--- FAIL: TestUnreliableAgree2C (10.05s)
+    config.go:469: one(100) failed to reach agreement
+    config.go:469: one(103) failed to reach agreement
+    config.go:469: one(102) failed to reach agreement
+    config.go:469: one(101) failed to reach agreement
+    config.go:469: one(1) failed to reach agreement
+    testing.go:809: race detected during execution of test
+Test (2C): Figure 8 (unreliable) ...
+==================
+WARNING: DATA RACE
+Write at 0x00c000480190 by goroutine 126:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:267 +0x9a
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c000480190 by goroutine 128:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x3a7
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestFigure8Unreliable2C()
+      /Users/wangdake/my6.824/src/raft/test_test.go:731 +0x5e
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 126 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 128 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+==================
+WARNING: DATA RACE
+Write at 0x00c000480188 by goroutine 126:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:268 +0xd6
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c000480188 by goroutine 128:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x387
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.TestFigure8Unreliable2C()
+      /Users/wangdake/my6.824/src/raft/test_test.go:731 +0x5e
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 126 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 128 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+--- FAIL: TestFigure8Unreliable2C (10.03s)
+    config.go:469: one(6909) failed to reach agreement
+    testing.go:809: race detected during execution of test
+Test (2C): churn ...
+==================
+WARNING: DATA RACE
+Write at 0x00c0002bac10 by goroutine 233:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:267 +0x9a
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c0002bac10 by goroutine 34:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x3a7
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.internalChurn()
+      /Users/wangdake/my6.824/src/raft/test_test.go:787 +0x68
+  raft.TestReliableChurn2C()
+      /Users/wangdake/my6.824/src/raft/test_test.go:930 +0x3d
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 233 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 34 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+==================
+WARNING: DATA RACE
+Write at 0x00c0002bac08 by goroutine 233:
+  raft.(*Raft).fillRequestVoteArgs()
+      /Users/wangdake/my6.824/src/raft/raft.go:268 +0xd6
+  raft.(*Raft).broadcastRequestVotes()
+      /Users/wangdake/my6.824/src/raft/raft.go:339 +0x7b
+
+Previous read at 0x00c0002bac08 by goroutine 34:
+  raft.Make()
+      /Users/wangdake/my6.824/src/raft/raft.go:465 +0x387
+  raft.(*config).start1()
+      /Users/wangdake/my6.824/src/raft/config.go:205 +0x921
+  raft.make_config()
+      /Users/wangdake/my6.824/src/raft/config.go:86 +0x7d0
+  raft.internalChurn()
+      /Users/wangdake/my6.824/src/raft/test_test.go:787 +0x68
+  raft.TestReliableChurn2C()
+      /Users/wangdake/my6.824/src/raft/test_test.go:930 +0x3d
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+
+Goroutine 233 (running) created at:
+  raft.(*Raft).electionDaemon()
+      /Users/wangdake/my6.824/src/raft/raft.go:416 +0x1ec
+
+Goroutine 34 (running) created at:
+  testing.(*T).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:916 +0x65a
+  testing.runTests.func1()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1157 +0xa8
+  testing.tRunner()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:865 +0x163
+  testing.runTests()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1155 +0x523
+  testing.(*M).Run()
+      /usr/local/Cellar/go/1.12.5/libexec/src/testing/testing.go:1072 +0x2eb
+  main.main()
+      _testmain.go:74 +0x222
+==================
+signal: interrupt
+FAIL	raft	137.425s

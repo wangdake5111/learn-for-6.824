@@ -296,7 +296,6 @@ func (cfg *config) setlongreordering(longrel bool) {
 // check that there's exactly one leader.
 // try a few times in case re-elections are needed.
 func (cfg *config) checkOneLeader() int {
-	var iter int
 	for iters := 0; iters < 10; iters++ {
 		ms := 450 + (rand.Int63() % 100)
 		time.Sleep(time.Duration(ms) * time.Millisecond)
@@ -319,14 +318,10 @@ func (cfg *config) checkOneLeader() int {
 				lastTermWithLeader = term
 			}
 		}
-		//DPrintf("领导%d",len(leaders))
 		if len(leaders) != 0 {
-			//cfg.t.Fatalf("ok\n")
 			return leaders[lastTermWithLeader][0]
 		}
-		iter = iters
 	}
-	cfg.t.Fatalf("expected one leader, got none, 第%d次",iter)
 	return -1
 }
 

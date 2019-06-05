@@ -37,9 +37,6 @@ func TestInitialElection2A(t *testing.T) {
 	// does the leader+term stay the same if there is no network failure?
 	time.Sleep(2 * RaftElectionTimeout)
 	term2 := cfg.checkTerms()
-	if term1 == term2{
-		fmt.Printf("good")
-	}
 	if term1 != term2 {
 		fmt.Printf("warning: term changed even though there were no failures")
 	}
